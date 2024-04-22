@@ -1,0 +1,7 @@
+{
+  "name": "BetterMineShafts",
+  "creator": "Nwjn",
+  "version": "1.0.3",
+  "description": "Times how long your party spends in the shaft",
+  "entry": "index.js"
+}
