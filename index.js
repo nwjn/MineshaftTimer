@@ -20,7 +20,7 @@ const earlyWarpout = register('chat', () => {
 // Tracks players you warp into your mineshaft
 register("chat", (player) => {
   // Returns if warping to non-Mineshaft instance gamemode
-  const world = TabList.getNames()?.find(tab => tab?.match(/(Area|Dungeon)/g))?.removeFormatting().split(": ").slice(-1);
+  const world = TabList.getNames()?.find(tab => tab?.match(/(Area|Dungeon)/g))?.removeFormatting()?.split(": ")?.slice(-1);
   if (world != "Mineshaft") return;
 
   // Adds player's name and time to object
@@ -43,12 +43,12 @@ function sendResults() {
 
   // Sorts the players by highest to lowest time (negative while loop reverts it back to lowest to highest)
   arrayTimes.sort((a, b) => b[1] - a[1])
-
-  let i = arrayTimes.length;
   
-  ChatLib.chat("&b▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n&eTracked Shaft Times:")
-  while (i--) {
-    ChatLib.chat(` &3${ arrayTimes[i][0] }:&r ${ arrayTimes[i][1] }&es`)
+  ChatLib.chat("&b▬▬▬▬▬▬▬▬MineshaftTimer▬▬▬▬▬▬▬▬")
+  ChatLib.chat(`&eTracked Shaft Times:`)
+  let i = arrayTimes.length; while (i--) {
+    const player = arrayTimes[i]
+    ChatLib.chat(` &3${ player[0] }:&r ${ player[1] }&es`)
   }
   ChatLib.chat("&b▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬")
   
@@ -67,7 +67,7 @@ let enter;
 // Resets on leave
 const reset = register("chat", () => {
   if (!enter) return
-  ChatLib.chat(` &3You took&r ${ ((Date.now() - enter) / 1000) }&es`)
+  ChatLib.chat(`&b[MineshaftTimer] &3You took&r ${ ((Date.now() - enter) / 1000) }&es`)
 
   enter = false
   reset.unregister()
