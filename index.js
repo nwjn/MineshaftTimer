@@ -41,7 +41,7 @@ function sendResults() {
     arrayTimes.push([key, playerTimes[key]])
   }
 
-  // Sorts the players by lowest to highest time (negative while loop reverts it back to highest to lowest)
+  // Sorts the players by highest to lowest time (negative while loop reverts it back to lowest to highest)
   arrayTimes.sort((a, b) => b[1] - a[1])
 
   let i = arrayTimes.length;
