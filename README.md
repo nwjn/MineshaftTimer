@@ -7,4 +7,4 @@ Times your party on how fast they leave your mineshaft
 Times how fast you leave other's mineshafts
 ![image](https://github.com/nwjn/MineshaftTimer/assets/127889040/e7d863bd-4ff5-4781-9f3a-463140b87f13)
 
-Original idea: Stuffy (MineShafts on Chattriggers)
+Continuation of _MineShafts_ by Stuffy
