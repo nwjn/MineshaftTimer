@@ -1,7 +1,7 @@
 {
-  "name": "BetterMineShafts",
-  "creator": "Nwjn",
-  "version": "1.0.3",
-  "description": "Times how long your party spends in the shaft",
+  "name": "MineshaftTimer",
+  "creator": "nwjn",
+  "version": "1.0.0",
+  "description": "Shows how long you and your party spend in the mineshaft",
   "entry": "index.js"
 }
