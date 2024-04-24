@@ -2,7 +2,7 @@ let playerTimes = {};
 
 // Tracks if a player leaves the mineshaft
 const playerWarpout = register('chat', (player) => {
-  if (!playerTimes[player]) return;
+  if (!playerTimes[player] || playerTimes[player] < 1000000) return;
 
   playerTimes[player] = (Date.now() - playerTimes[player]) / 1000
 }).setCriteria(" » ${player} is traveling to ${*} FOLLOW").unregister()
@@ -35,22 +35,20 @@ register("chat", (player) => {
 
 // Calculates and formats each player's time that warped-out
 function sendResults() {
-  let arrayTimes = []
-  for (let key in playerTimes) {
-    if (!playerTimes[key] || playerTimes[key] > 60000) continue;
-    arrayTimes.push([key, playerTimes[key]])
-  }
-
+  
   // Sorts the players by highest to lowest time (negative while loop reverts it back to lowest to highest)
-  arrayTimes.sort((a, b) => b[1] - a[1])
+  const arrayTimes = Object.entries(playerTimes).sort((a, b) => b[1] - a[1])
   
   ChatLib.chat("&b▬▬▬▬▬▬▬▬MineshaftTimer▬▬▬▬▬▬▬▬")
   ChatLib.chat(`&eTracked Shaft Times:`)
   let i = arrayTimes.length; while (i--) {
-    const player = arrayTimes[i]
-    ChatLib.chat(` &3${ player[0] }:&r ${ player[1] }&es`)
+    const [name, time] = [arrayTimes[i][0], arrayTimes[i][1]]
+
+    const text = time < 1000000 ? ` &3${ name }:&r ${ time }&es` : ` &3&l${name}:&f&l ≥ ${(Date.now() - time) / 1000}&es`
+    ChatLib.chat(text)
+    arrayTimes.pop()
   }
-  ChatLib.chat("&b▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬")
+  ChatLib.chat("&b▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬")
   
   // Unregisters triggers and resets all variables
   playerTimes = {}
