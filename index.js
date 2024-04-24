@@ -37,16 +37,21 @@ register("chat", (player) => {
 function sendResults() {
   
   // Sorts the players by highest to lowest time (negative while loop reverts it back to lowest to highest)
-  const arrayTimes = Object.entries(playerTimes).sort((a, b) => b[1] - a[1])
+  const ref = Object.entries(playerTimes)
+  const finished = ref.filter(e => e[1] < 1000000).sort((a, b) => b[1] - a[1])
+  const unfinished = ref.filter(e => e[1] >= 1000000).sort((a, b) => a[1] - b[1])
   
   ChatLib.chat("&b▬▬▬▬▬▬▬▬MineshaftTimer▬▬▬▬▬▬▬▬")
-  ChatLib.chat(`&eTracked Shaft Times:`)
-  let i = arrayTimes.length; while (i--) {
-    const [name, time] = [arrayTimes[i][0], arrayTimes[i][1]]
-
-    const text = time < 1000000 ? ` &3${ name }:&r ${ time }&es` : ` &3&l${name}:&f&l ≥ ${(Date.now() - time) / 1000}&es`
-    ChatLib.chat(text)
-    arrayTimes.pop()
+  finished && ChatLib.chat(`&aCompleted Shaft Times:`)
+  let i = finished.length; while (i--) {
+    const [name, time] = [finished[i][0], finished[i][1]]
+    ChatLib.chat(` &3${ name }:&r ${ time }&es`)
+  }
+  (finished && unfinished) && ChatLib.chat("&b▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬")
+  unfinished && ChatLib.chat(`&cUnfinished Shaft Times:`)
+  i = unfinished.length; while (i--) {
+    const [name, time] = [unfinished[i][0], unfinished[i][1]]
+    ChatLib.chat(` &3&l${name}:&f&l ≥ ${(Date.now() - time) / 1000}&es`)
   }
   ChatLib.chat("&b▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬")
   
